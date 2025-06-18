@@ -1,8 +1,6 @@
-[![](www/imagenes_github/Logo_IdISBa_2024.jpg)](https://www.idisba.es/es/)
+# GeNet
 
-# WGCNA
 
-<img src="www/imagenes_github/wgcna_logo.png" width="200px"/>
 
 ## 📝 Descripció  
 
