@@ -1,0 +1,244 @@
+---
+title: "`r params$title1`"
+output:
+   rmdformats::robobook:
+     highlight: kate
+     toc: 3
+     code_folding: hide
+date:  "`r Sys.Date()`"
+params:
+  
+  title1: NA
+    
+  # Paths per es plots
+  dir_plot: NA
+    
+  # Datasets introduits
+  file_expressio_diferencial: NA
+  file_fenotips: NA
+  
+  # Variables para la lectura del csv expressio diferencial
+  quote_genes: NA
+  sep_genes: NA
+  dec_genes: NA
+  
+  # Variables par la lectura del csv de fenotips
+  quote_fenotips: NA
+  sep_fenotips: NA
+  dec_fenotips: NA
+  
+  # Variables cluster plot
+  
+  genes: NA
+  delimiter_cut_plot: NA
+  min_size: NA
+  number_clust: NA
+  
+  # Variables dendro plot
+  
+  modules: NA
+  
+  # Variables power plot
+  
+  by: NA
+  
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\newcommand{\mytitle}{`r params$title_report`}
+
+\begin{center}
+\Huge \mytitle
+\end{center}
+
+
+### Expressio diferencial 
+
+```{r expressio_diferencial_variables, echo = FALSE, warning = FALSE, results = 'asis'}
+if(is.null(params$file_expressio_diferencial) == F) {
+variables <- data.frame(
+    Variables = c("comment.char", "stringAsFactors", "quote", "sep", "dec", "row.names"),
+    Value = c("#", "F", paste0(params$quote_genes), paste0(params$sep_genes), paste0(params$dec_genes), "NULL")
+)
+
+datatable(variables)}
+
+```
+
+
+```{r expresio_diferencial, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(is.null(params$file_expressio_diferencial) == F) {
+
+dataset_expressio_diferencial <- read.csv(params$file_expressio_diferencial,
+                           comment.char = "#",
+                           stringsAsFactors = F,
+                           quote = params$quote_genes,
+                           sep = params$sep_genes,
+                           dec = params$dec_genes,
+                           row.names = NULL)
+datatable(dataset_expressio_diferencial)
+}
+
+```
+
+### Fenotips
+
+```{r fenotips_variables, echo=FALSE, warning=FALSE, results='asis'}
+if(is.null(params$file_expressio_diferencial) == F) {
+variables <- data.frame(
+    Variables = c("comment.char", "stringAsFactors", "quote", "sep", "dec", "row.names"),
+    Value = c("#", "F", paste0(params$quote_fenotips), paste0(params$sep_fenotips), paste0(params$dec_fenotips), "NULL")
+)
+
+datatable(variables)}
+
+```
+
+```{r fenotips, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(is.null(params$file_fenotips) == F){
+
+dataset_expressio_diferencial <- read.csv(params$file_fenotips,
+                           comment.char = "#",
+                           stringsAsFactors = F,
+                           quote = params$quote_fenotips,
+                           sep = params$sep_fenotips,
+                           dec = params$dec_fenotips,
+                           row.names = NULL)
+datatable(dataset_expressio_diferencial)
+}
+
+```
+
+### Cluster
+
+
+```{r cluster_variables, echo = F, warning = F, results = 'asis'}
+if(file.exists(paste0('.',params$dir_plot, '/plot_cluster.png'))){
+
+variables <- data.frame(
+    Variables = c("delimiter_cut_off","min_size","number_clust"),
+    Value = c(paste0(params$delimiter_cut_plot), paste0(params$min_size), paste0(params$number_clust))
+)
+
+datatable(variables)
+
+}
+
+```
+
+
+```{r cluster, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(file.exists(paste0('.',params$dir_plot, '/plot_cluster.png'))){
+    include_graphics(paste0('.',params$dir_plot, '/plot_cluster.png'))
+}
+
+
+```
+
+### Dendro Plot
+
+```{r dendro_variables, echo = F, warning = F, results = 'asis'}
+if(file.exists(paste0('.',params$dir_plot, '/plot_cluster.png'))){
+
+variables <- data.frame(
+    Variables = c("modules"),
+    Value = c(paste0(params$modules))
+)
+
+datatable(variables)
+
+}
+
+```
+
+
+```{r dendro, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(file.exists(paste0('.',params$dir_plot, "/dendro_plot.png"))){
+    include_graphics(paste0('.',params$dir_plot, "/dendro_plot.png"))
+}
+
+
+```
+
+
+### Power plot
+
+```{r power_plot_variables, echo = F, warning = F, results = 'asis'}
+if(file.exists(paste0('.',params$dir_plot, '/power_plot_1.png'))){
+
+variables <- data.frame(
+    Variables = c("by"),
+    Value = c(paste0(params$by))
+)
+
+datatable(variables)
+
+}
+
+```
+
+
+```{r power, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(file.exists(paste0('.',params$dir_plot, "/power_plot_1.png"))){
+    include_graphics(paste0('.',params$dir_plot, "/power_plot_1.png"))
+}
+
+```
+
+```{r power_2, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(file.exists(paste0('.',params$dir_plot, "/power_plot_2.png"))){
+    include_graphics(paste0('.',params$dir_plot, "/power_plot_2.png"))
+}
+
+```
+
+### Dendograma de cluster
+
+```{r dendogram_cluster, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(file.exists(paste0('.',params$dir_plot, "/dendogram_cluster.png"))){
+    include_graphics(paste0('.',params$dir_plot, "/dendogram_cluster.png"))
+}
+
+```
+
+### Module trait
+
+```{r module_trait, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(file.exists(paste0('.',params$dir_plot, "/module_trait.png"))){
+    include_graphics(paste0('.',params$dir_plot, "/module_trait.png"))
+}
+
+```
+
+### Point plot
+
+```{r point_plot, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(file.exists(paste0('.',params$dir_plot, "/point_plot.png"))){
+    include_graphics(paste0('.',params$dir_plot, "/point_plot.png"))
+}
+
+```
+
+### Net Igraph 
+
+```{r net_igraph, include=T,echo=FALSE,warning=FALSE,results='asis'}
+
+if(file.exists(paste0('.',params$dir_plot, "/net_igraph.png"))){
+    include_graphics(paste0('.',params$dir_plot, "/net_igraph.png"))
+}
+
+```
